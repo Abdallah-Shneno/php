@@ -1,0 +1,295 @@
+<?php 
+session_start();
+
+if (isset($_SESSION['is_login']) && $_SESSION['is_login']) {
+
+} else {
+	header("location: http://localhost/myProject/Admin/Outhentication/login.php");
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<title>Add New Book</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<style type="text/css">
+		
+
+		ul#nav {
+	margin: 0 0 20px 0;
+	height: 40px;
+	line-height: 45px;
+	font-size: 1.2em;
+	font-family: "Times New Roman", serif;
+	overflow: hidden;
+			color: #fff;
+
+}
+ul#nav li {
+	display: inline;
+	list-style-type: none;
+	text-transform: uppercase;
+	margin: 0 20px 0 0;
+
+}
+ul#nav li a {
+	color: #bf1363;
+	font-weight: 100;
+	text-decoration: none;
+}
+ul#nav li a:hover {
+	color: #343a40;
+		text-decoration: none;
+
+}
+
+
+
+
+				#nav{
+	          	background-color: #ffc2b4 ;
+	          	margin-top: 1%;
+	          	padding-top: 1%;
+	          	padding-bottom: 1%;
+	          	text-align: center;
+				}
+
+				#footer{
+									margin-top: 4%;
+
+					width: 100%;
+				background-color: #ffc2b4 ;
+				display: inline-block;
+
+				}
+
+				#name:hover {
+					color: #453e3b;
+				}
+
+				#name {
+					color: #fff;
+						text-decoration: none;
+
+				}
+
+			p.copyright {
+				font-size: 100%;
+				font-family: "Times New Roman", serif;
+				color: #000;
+				text-transform: uppercase;
+				margin-top: 3%;
+				margin-bottom: 1%;
+				margin-left: 25%;
+				padding-bottom: 2%;
+				padding-top: 2%;
+			}
+
+
+			.titlesA1{
+				font-size: 150;
+				margin-top: 5%;
+				font-size: 150%;
+				background-color: #ff8882 ;
+				padding: 3%;
+				color: #fff;
+			}
+
+			.titlesA2{
+				font-size: 150%;
+				color: #c84b31;
+			}
+			body{
+				margin-right: 12%;
+				margin-left: 12%;
+				font-family: Arial, Helvetica, sans-serif;
+			}		
+			.headers{
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 135%;
+				color: #194350;
+			}	
+			.bookInfo{
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 150%;
+			}
+			.myGroup{
+				padding-left: 5%;
+				padding-top: 0.4%;
+				padding-bottom: 5%;
+				background-color: #9dbeb9 ;
+			}
+			#Booksubmit_id {
+				  background-color: #4CAF50;
+				  border: none;
+				  color: white;
+				  padding: 15px 32px;
+				  text-align: center;
+				  text-decoration: none;
+				  display: inline-block;
+				  font-size: 16px;
+				  margin-left: 35%;
+				  margin-top: 3%;
+				  cursor: pointer;
+				}
+				select {
+				  width: 20%;
+				  border: none;
+				  border-radius: 4px;
+				  background-color: #f1f1f1;
+				}
+				.textInteres {
+				  width: 20%;
+				  padding: 0.5%;
+				  box-sizing: border-box;
+				}
+
+		</style>
+</head>
+<body>
+
+
+
+
+
+	<h3 class="titlesA1">Add New Book </h3>
+
+
+<div class="myGroup">
+	
+
+	<h3 class="titlesA2">Please pay attention for all details </h3>
+	<form action="http://localhost/myProject/Admin/Books/actionAddBook.php" id="addBookForm"  method="POST" enctype="multipart/form-data">
+		<p class="bookInfo">Book Information</p>
+			<div> <label class="headers" for="BookName_id">Book Name</label>
+					<input class="textInteres" type="text" placeholder="Book Name" name="bookName_name" id="BookName_id">
+			</div>
+<!-- BookOuther -->
+			<div> 
+				<label class="headers" for="BookOuther_id">Book Outher</label>
+				<select id="BookOuther_id" name="BookOuther_name" >
+					<?php 
+					$connection = mysqli_connect('localhost','root','','booksystem');
+					if (! $connection ) {
+						//	echo "error";
+					}else{
+						//	echo "db connection done";
+						}
+						$query = "SELECT * from outher";
+						$result = mysqli_query($connection , $query);
+						if (mysqli_num_rows($result) > 0) {
+							while ($row = mysqli_fetch_assoc($result) ) {
+
+							echo('<option value="'.$row['name'].'">'.$row['name'].$row['fname'].'</option>');
+							}
+							mysqli_close($connection);
+						}
+
+				?>
+				</select>
+			</div>
+
+<!-- BookPublish -->
+			<div> 
+				<label class="headers" for="BookPublish_id">Book Publish</label>
+				<select name="BookPublish_name" id="BookPublish_id" >
+				<?php 
+					$connection = mysqli_connect('localhost','root','','booksystem');
+					if (! $connection ) {
+						//	echo "error";
+					}else{
+						//	echo "db connection done";
+						}
+						$query = "SELECT * from publish";
+						$result = mysqli_query($connection , $query);
+						if (mysqli_num_rows($result) > 0) {
+							while ($row = mysqli_fetch_assoc($result) ) {
+
+							echo('<option value="'.$row['name'].'">'.$row['name'].$row['fname'].'</option>');
+							}
+							mysqli_close($connection);
+						}
+
+				?>
+
+				</select>
+			</div>
+<!-- BookType -->
+			<div> 
+				<label class="headers" for="BookType_id">Book Category</label>
+				<select id="BookType_id"  name="BookType_name">
+					<?php 
+					$connection = mysqli_connect('localhost','root','','booksystem');
+					if (! $connection ) {
+						//	echo "error";
+					}else{
+						//	echo "db connection done";
+						}
+						$query = "SELECT * from category";
+						$result = mysqli_query($connection , $query);
+						if (mysqli_num_rows($result) > 0) {
+							while ($row = mysqli_fetch_assoc($result) ) {
+
+							echo('<option value="'.$row['name'].'">'.$row['name'].'</option>');
+							}
+							mysqli_close($connection);
+						}
+
+				?>
+				</select>
+			</div>			
+			 
+			 <div>
+			 	<label class="headers" for="BookNumber_id">International Standard Book Number </label>
+					<input class="textInteres" type="text" placeholder="Standard Book Number" name="BookNumber_name" id="BookNumber_id">
+			</div>
+
+		
+			<div>
+				<label class="headers" >Book Status</label>
+				<input type="radio" name="state" value="f"> Free
+				<input type="radio" name="state" value="p"> Paid
+			</div>
+
+		
+
+
+			<div >
+				<label class="headers" for="bookImage_id">Book Image</label>
+				<input type="file" name="bookImage" id="bookImage_id">
+			</div>
+
+			
+			<div>
+					<button type="button" id="Booksubmit_id">Save Book</button> 
+			</div>
+			
+	</form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+	$('#Booksubmit_id').click(function (e) {
+		  var res = confirm("Are you sure ?");
+		  if ( res == true ) {
+		  		$('#addBookForm').submit();
+		  }	
+
+	});
+
+</script>
